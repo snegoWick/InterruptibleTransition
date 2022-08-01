@@ -15,12 +15,20 @@ class PresentationController: UIPresentationController {
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
-        let bounds = containerView!.bounds
-        let halfHeight = bounds.height / 2
-        return CGRect(x: 0,
-                      y: halfHeight,
-                      width: bounds.width,
-                      height: halfHeight)
+        
+        var frameView: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+        
+        if UIApplication.shared.statusBarOrientation.isLandscape {
+            let bounds = containerView!.bounds
+            let halfHeight = bounds.height / 2
+            frameView = CGRect(x: 0, y: halfHeight, width: bounds.width, height: halfHeight)
+        } else {
+            let bounds = containerView!.bounds
+            let halfHeight = bounds.height / 1.5
+            let height = bounds.height / 3
+            frameView = CGRect(x: 0, y: halfHeight, width: bounds.width, height: height)
+        }
+        return frameView
     }
     
     override func presentationTransitionWillBegin() {
